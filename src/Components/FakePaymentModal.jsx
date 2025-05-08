@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { FaCreditCard, FaMobileAlt } from "react-icons/fa";
 import { ImSpinner2 } from "react-icons/im";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../slices/cartsSice";
 
 const FakePaymentModal = ({ onClose, onSuccess, amount }) => {
   const [method, setMethod] = useState("card");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handlePay = () => {
     setLoading(true);
@@ -12,6 +17,8 @@ const FakePaymentModal = ({ onClose, onSuccess, amount }) => {
       setLoading(false);
       onSuccess();
       onClose();
+      dispatch(clearCart());
+      navigate("/");
     }, 1500);
   };
 
