@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "./slices/productSlice";
 import Loder from "./Components/Loder";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +22,17 @@ function App() {
   };
 
   if (status === "loading") return <Loder />;
-  if (status === "failed") return <p>Error: {error}</p>;
+  if (status === "failed") {
+    return (
+      <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded relative flex items-center gap-3">
+        <FaExclamationTriangle className="text-red-600 text-xl" />
+        <div>
+          <p className="font-semibold">Oops! Something went wrong.</p>
+          <p className="text-sm">{error || "Unable to fetch data. Please try again later."}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
